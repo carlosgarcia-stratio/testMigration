@@ -1,13 +1,12 @@
 package com.stratio.qa
 
 import java.io.File
-import java.nio.file.{Files, Path}
 
-import com.stratio.qa.Utils.fileOps
 import com.stratio.qa.models.{NewWithAddedFieldWithDefault, NewWithChangedTypes, NewWithDroppedField, NewWithRenamedField, _}
 import org.json4s.{DefaultFormats, Formats}
 import org.json4s.jackson.Serialization.write
-import com.stratio.qa.Utils.fileImplicits._
+import com.stratio.qa.utils.Utils.fileImplicits._
+import com.stratio.qa.utils.Utils.writeFile
 
 import scala.util.{Failure, Success, Try}
 
@@ -115,19 +114,6 @@ object App
 
   }
 
-  def writeFile(dir: String, fileName: String, exported: Array[Byte]) = {
-    val dirPath = createDir(dir)
-    val filePath =s"${dirPath.toPath.toAbsolutePath}/${fileName}"
-    Files.write(new File(filePath).toPath, exported)
-    filePath
-  }
 
-  def createDir(pathToCreate: String): File = {
-    val folder = new File(pathToCreate)
-    if (Files.notExists(folder.toPath)) {
-      Files.createDirectories(folder.toPath)
-    }
-    folder
-  }
 
 }

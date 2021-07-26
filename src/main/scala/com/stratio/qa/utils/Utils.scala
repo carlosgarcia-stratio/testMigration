@@ -1,11 +1,12 @@
-package com.stratio.qa
+package com.stratio.qa.utils
 
 import java.io.File
+import java.nio.file.Files
 
 import org.json4s.Formats
+import org.json4s.jackson.Serialization.{read => jacksonRead}
 
 import scala.io.Source
-import org.json4s.jackson.Serialization.{read => jacksonRead}
 
 
 object Utils {
@@ -44,4 +45,20 @@ object Utils {
     }
 
   }
+
+  def writeFile(dir: String, fileName: String, exported: Array[Byte]) = {
+    val dirPath = createDir(dir)
+    val filePath =s"${dirPath.toPath.toAbsolutePath}/${fileName}"
+    Files.write(new File(filePath).toPath, exported)
+    filePath
+  }
+
+  def createDir(pathToCreate: String): File = {
+    val folder = new File(pathToCreate)
+    if (Files.notExists(folder.toPath)) {
+      Files.createDirectories(folder.toPath)
+    }
+    folder
+  }
+
 }
